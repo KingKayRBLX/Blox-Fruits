@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastery Level Calculator</title>
+    
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #121212; /* Dark Theme */
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            box-sizing: border-box;
+        }
+
+        /* Heading */
+        h1 {
+            color: #00aaff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Form Styles */
+        form {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.5);
+            box-sizing: border-box;
+        }
+
+        label {
+            font-weight: bold;
+            color: #00aaff;
+            margin: 15px 0 5px;
+            font-size: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            background-color: #2a2a2a;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border: 2px solid #00aaff;
+            transform: scale(1.05);
+        }
+
+        /* Rectangular Rounded Button */
+        button {
+            background-color: #00aaff;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px; /* Slightly rounded corners */
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+            align-self: center;
+        }
+
+        button:hover {
+            background-color: #0088cc;
+            transform: scale(1.05);
+            box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.7);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Result Box */
+        #result {
+            margin-top: 25px;
+            font-size: 18px;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0px 0px 15px rgba(0, 170, 255, 0.5);
+            word-wrap: break-word;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mastery Level Calculator</h1>
+
+    <form id="masteryCalculatorForm">
+        <label for="maslevel">Current Mastery Level:</label>
+        <input type="number" id="maslevel" name="maslevel" required>
+
+        <label for="npcmasxpgivein1minute">XP gained per minute:</label>
+        <input type="number" id="npcmasxpgivein1minute" name="npcmasxpgivein1minute" required>
+
+        <label for="wantedlvl">Target Mastery Level:</label>
+        <input type="number" id="wantedlvl" name="wantedlvl" required>
+
+        <button type="button" onclick="calculateMastery()">Calculate</button>
+    </form>
+
+    <p id="result"></p>
+
+    <script>
+        function calculateMastery() {
+            var maslevel = parseInt(document.getElementById("maslevel").value);
+            var npcmasxpgivein1minute = parseInt(document.getElementById("npcmasxpgivein1minute").value);
+            var wantedlvl = parseInt(document.getElementById("wantedlvl").value);
+
+            if (isNaN(maslevel) || isNaN(npcmasxpgivein1minute) || isNaN(wantedlvl)) {
+                document.getElementById("result").innerHTML = "⚠️ Please fill in all fields with valid numbers.";
+                return;
+            }
+
+            var needed = 0;
+            var levels = wantedlvl - maslevel;
+
+            for (var i = 0; i < levels; i++) {
+                needed += Math.pow(maslevel, 2.26) + 69;
+                maslevel++;
+            }
+
+            var x = Math.ceil(needed / npcmasxpgivein1minute);
+            var hours = Math.floor(x / 60);
+            var mins = x % 60;
+
+            var resultText = `
+                <strong>XP needed:</strong> ${needed.toLocaleString()}<br>
+                <strong>Estimated Time:</strong> ${hours} hours and ${mins} minutes
+            `;
+
+            document.getElementById("result").innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
